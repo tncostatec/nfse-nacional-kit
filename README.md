@@ -1,5 +1,7 @@
 # NFS-e Nacional — kit de emissão em Python
 
+[![CI](https://github.com/tncostatec/nfse-nacional-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/tncostatec/nfse-nacional-kit/actions/workflows/ci.yml) ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue) [![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-green)](LICENSE)
+
 Emissão, consulta e cancelamento de **NFS-e no padrão Nacional** (SEFIN / gov.br),
 extraído de um sistema em produção que emite notas de verdade desde julho/2026.
 
@@ -7,6 +9,11 @@ Não é uma biblioteca genérica de "notas fiscais": é o caminho específico do
 **Sistema Nacional NFS-e** — o padrão unificado que substitui os mil sistemas
 municipais diferentes. Se o seu município já aderiu ao Nacional, isto emite. Se
 ele ainda usa sistema próprio (Ginfes, ISSNet, WebISS...), isto **não** serve.
+
+*English: issue, query and cancel Brazilian service invoices (NFS-e) on the national standard
+(SEFIN / gov.br) from Python: DPS XML builder, XMLDSig signing with an ICP-Brasil A1 certificate,
+mTLS client, tolerant response parser and a catalogue of the validator pitfalls that are not in the
+official manual. Three dependencies, no framework, no database. Documentation is in Portuguese.*
 
 ---
 
@@ -97,34 +104,20 @@ Veja `docs/INTEGRACAO.md`.
   real; cancelar depois envolve prazo municipal e justificativa.
 - **O número da nota é sequencial e único por série.** Reenviar um número já
   usado é rejeitado. No seu sistema, isso precisa vir de um contador
-  transacional no banco — nunca de um `max(numero) + 1` lido antes do commit.
-- **Nunca comite o `.pfx`, a senha ou o `.env`.** O `.gitignore` já cobre, mas
-  confira antes do primeiro push.
-- **Guarde o XML autorizado.** Ele é o documento fiscal, não o PDF. O PDF
-  (DANFSe) é só uma representação e pode ser regerado; o XML, não.
+  transacional no banco — nunca de um `max(numero) + 1` lido antes ## Licença e origem
 
----
+Código extraído da camada fiscal de um ERP em produção (TN Costa Tecnologia), que emite notas de verdade
+desde julho/2026. Contém só a camada fiscal: nenhuma lógica de negócio do sistema de origem.
 
-## Documentação oficial
+Licença **MIT** (ver `LICENSE`): use, modifique e redistribua, mantendo o aviso de copyright.
 
-- Portal: <https://www.gov.br/nfse>
-- Leiautes e schemas XSD (ANEXO I = DPS, ANEXO II = eventos):
-  <https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/documentacao-atual>
-- Manual da API "Contribuintes — Emissor Público"
+Sem garantia: emissão de documento fiscal é responsabilidade de quem emite. Valide em produção
+restrita e confira as regras do seu município antes de emitir a primeira nota real.
 
-A documentação oficial é incompleta em pontos importantes. O que falta nela
-está em `docs/ARMADILHAS.md` — foi descoberto na tentativa e erro contra o
-ambiente real.
+## Autor
 
----
+**Tiago Costa** · TN Costa Tecnologia (Macapá, AP; atendimento em todo o Brasil)
+[tncostatecnologia.com.br](https://www.tncostatecnologia.com.br/) · [LinkedIn](https://www.linkedin.com/in/tiago-costa-7470587a) · [GitHub](https://github.com/tncostatec)
 
-## Licença e origem
-
-Código extraído de um ERP em produção (TN Costa Tecnologia), compartilhado
-diretamente com você pelo autor. Contém apenas a camada fiscal — nenhuma lógica
-de negócio do sistema de origem. Combine com ele os termos de uso e
-redistribuição; não há licença aberta declarada aqui.
-
-Sem garantia: emissão de documento fiscal é responsabilidade de quem emite.
-Valide em produção restrita e confira as regras do seu município antes de
-emitir a primeira nota real.
+Achou uma divergência nova do validador? Abra uma issue com o código de erro e o trecho do XML
+(sem dados reais): a lista de armadilhas cresce assim.

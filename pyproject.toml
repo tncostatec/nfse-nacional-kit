@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nfse-nacional-kit"
+version = "0.1.0"
+description = "Emissão, consulta e cancelamento de NFS-e no padrão Nacional (SEFIN/gov.br): DPS, assinatura XMLDSig com certificado A1 e cliente mTLS, sem framework nem banco"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Tiago Costa (TN Costa Tecnologia)" }]
+keywords = ["nfse", "nfs-e", "nfse-nacional", "sefin", "gov.br", "xmldsig", "icp-brasil", "nota-fiscal", "dps"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: Portuguese (Brazilian)",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business :: Financial :: Accounting",
+]
+dependencies = [
+  "lxml>=5.2.0",
+  "cryptography>=42.0",
+  "httpx>=0.27.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/tncostatec/nfse-nacional-kit"
+Armadilhas = "https://github.com/tncostatec/nfse-nacional-kit/blob/main/docs/ARMADILHAS.md"
+Autor = "https://www.tncostatecnologia.com.br/"
+
+[tool.setuptools]
+packages = ["nfse_core"]

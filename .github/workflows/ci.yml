@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  autoteste:
+    name: autoteste local (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Dependências do núcleo (lxml, cryptography, httpx)
+        run: pip install -r requirements.txt
+      - name: Compila tudo (erro de sintaxe para aqui)
+        run: python -m compileall -q nfse_core exemplos
+      - name: Instala como pacote (pyproject)
+        run: pip install .
+      - name: Autoteste sem certificado e sem internet
+        run: python exemplos/00_teste_local.py
+      - name: O XML assinado foi gerado
+        run: test -s dps_exemplo_assinada.xml && head -c 300 dps_exemplo_assinada.xml
